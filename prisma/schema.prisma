@@ -1,12 +1,12 @@
 // Prisma schema for Meeting Room Booking System
-// SQLite for simplicity; switch to postgres for production persistence on Render
+// PostgreSQL for production persistence on Render
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
