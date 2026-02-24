@@ -10,7 +10,7 @@ services:
     runtime: node
     plan: free
     buildCommand: npm run render:build
-    startCommand: npm start
+    startCommand: npm run render:start
     envVars:
       - key: DATABASE_URL
         fromDatabase:
