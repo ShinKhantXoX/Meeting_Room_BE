@@ -42,7 +42,17 @@ bookingsRouter.get("/", authMiddleware, async (req, res, next) => {
       const grouped = await getBookingsGroupedByUser();
       return res.json(grouped);
     }
-    const bookings = await findAllBookings();
+    const startDate =
+      typeof req.query.startDate === "string"
+        ? new Date(req.query.startDate)
+        : undefined;
+    const endDate =
+      typeof req.query.endDate === "string"
+        ? new Date(req.query.endDate)
+        : undefined;
+    const userName =
+      typeof req.query.userName === "string" ? req.query.userName : undefined;
+    const bookings = await findAllBookings({ startDate, endDate, userName });
     res.json(bookings);
   } catch (e) {
     next(e);
