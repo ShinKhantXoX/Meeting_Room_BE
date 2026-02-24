@@ -2,8 +2,19 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function findAllBookings() {
+export async function findAllBookings(filters?: {
+  startDate?: Date;
+  endDate?: Date;
+  userName?: string;
+}) {
+  const where: Record<string, unknown> = {};
+  if (filters?.startDate) where.startTime = { gte: filters.startDate };
+  if (filters?.endDate) where.endTime = { lte: filters.endDate };
+  if (filters?.userName)
+    where.user = { name: { contains: filters.userName, mode: "insensitive" } };
+
   return prisma.booking.findMany({
+    where,
     include: { user: { select: { id: true, name: true, role: true } } },
     orderBy: { startTime: "asc" },
   });
