@@ -6,7 +6,7 @@ databases:
 
 services:
   - type: web
-    name: meeting-room-api
+    name: Meeting_Room_BE
     runtime: node
     plan: free
     buildCommand: npm run render:build
