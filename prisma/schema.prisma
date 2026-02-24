@@ -1,0 +1,28 @@
+// Prisma schema for Meeting Room Booking System
+// SQLite for simplicity; switch to postgres for production persistence on Render
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  role      String    @default("user") // "admin" | "owner" | "user"
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startTime DateTime
+  endTime   DateTime
+  createdAt DateTime @default(now())
+}
